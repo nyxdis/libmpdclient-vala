@@ -108,6 +108,11 @@ namespace Mpd {
 	[CCode (cname = "struct mpd_async")]
 	[Compact]
 	public class Async {
+		public Mpd.Error error { get; }
+		public string error_message { get; }
+		public int system_error { get; }
+		public int fd { get; }
+
 		public Async(int fd);
 		public Mpd.Error get_error();
 		public unowned string? get_error_message();
@@ -131,6 +136,15 @@ namespace Mpd {
 	[CCode (cname = "struct mpd_connection")]
 	[Compact]
 	public class Connection {
+		public int fd { get; }
+		public Mpd.Async async { get; }
+		public Mpd.Error error { get; }
+		public string error_message { get; }
+		public Mpd.ServerError server_error { get; }
+		public int system_error { get; }
+		public uint[] server_version { get; }
+		public uint timeout { set; }
+
 		public Connection(string? host = null, uint port = 0, uint timeout_ms = 0);
 		[CCode (cname = "mpd_connection_new_async")]
 		public Connection.from_async(Mpd.Async async, string welcome);
@@ -142,7 +156,7 @@ namespace Mpd {
 		public Mpd.ServerError get_server_error();
 		public int get_system_error();
 		public bool clear_error();
-		public unowned uint* get_server_version();
+		public uint[] get_server_version();
 		public int cmp_server_version(uint major, uint minor, uint patch);
 		[CCode (cname = "mpd_recv_directory")]
 		public Directory? recv_directory();
@@ -474,6 +488,8 @@ namespace Mpd {
 		copy_function = "mpd_directory_dup")]
 	[Compact]
 	public class Directory {
+		public string path { get; }
+
 		public unowned string get_path();
 		public bool feed(Mpd.Pair pair);
 		public Entity? entity_begin();
@@ -482,6 +498,11 @@ namespace Mpd {
 	[CCode (cname = "struct mpd_entity")]
 	[Compact]
 	public class Entity {
+		public EntityType type { get; }
+		public Directory directory { get; }
+		public Song song { get; }
+		public Playlist playlist { get; }
+
 		public EntityType get_type();
 		public Directory get_directory();
 		public Song get_song();
@@ -492,6 +513,10 @@ namespace Mpd {
 	[CCode (cname = "struct mpd_output")]
 	[Compact]
 	public class Output {
+		public uint id { get; }
+		public string name { get; }
+		public bool enabled { get; }
+
 		public bool feed(Pair pair);
 		public uint get_id();
 		public unowned string get_name();
@@ -518,6 +543,12 @@ namespace Mpd {
 	[CCode (cname = "struct mpd_parser")]
 	[Compact]
 	public class Parser {
+		public ServerError server_error { get; }
+		public uint at { get; }
+		public string message { get; }
+		public string name { get; }
+		public string value { get; }
+
 		public ParserResult feed(string line);
 		public bool is_discrete();
 		public ServerError get_server_error();
@@ -531,6 +562,9 @@ namespace Mpd {
 		copy_function = "mpd_playlist_dup")]
 	[Compact]
 	public class Playlist {
+		public string path { get; }
+		public int64 last_modified { get; }
+
 		public string get_path();
 		public int64 get_last_modified();
 		public bool feed(Pair pair);
@@ -540,6 +574,12 @@ namespace Mpd {
 		copy_function = "mpd_song_dup")]
 	[Compact]
 	public class Song {
+		public string uri { get; }
+		public uint duration { get; }
+		public int64 last_modified { get; }
+		public uint pos { get; set; }
+		public uint id { get; }
+
 		public unowned string get_uri();
 		public unowned string get_tag(TagType type, uint idx = 0);
 		public uint get_duration();
@@ -553,6 +593,14 @@ namespace Mpd {
 	[CCode (cname = "struct mpd_stats")]
 	[Compact]
 	public class Stats {
+		public uint number_of_artist { get; }
+		public uint number_of_albums { get; }
+		public uint number_of_songs { get; }
+		public ulong uptime { get; }
+		public ulong db_update_time { get; }
+		public ulong play_time { get; }
+		public ulong db_play_time { get; }
+
 		public void feed(Pair pair);
 		public uint get_number_of_artists();
 		public uint get_number_of_albums();
@@ -566,6 +614,27 @@ namespace Mpd {
 	[CCode (cname = "struct mpd_status")]
 	[Compact]
 	public class Status {
+		public int volume { get; }
+		public bool repeat { get; }
+		public bool random { get; }
+		public bool single { get; }
+		public bool consume { get; }
+		public uint queue_length { get; }
+		public uint queue_version { get; }
+		public State state { get; }
+		public uint crossfade { get; }
+		public float mixrampdb { get; }
+		public float mixrampdelay { get; }
+		public int song_pos { get; }
+		public int song_id { get; }
+		public uint elapsed_time { get; }
+		public uint elapsed_ms { get; }
+		public uint total_time { get; }
+		public uint kbit_rate { get; }
+		public AudioFormat audio_format { get; }
+		public uint update_id { get; }
+		public string error { get; }
+
 		public int get_volume();
 		public bool get_repeat();
 		public bool get_random();

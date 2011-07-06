@@ -9,7 +9,7 @@ int main()
 	stdout.printf("%s - %s\n", song.get_tag(TagType.ARTIST), song.get_tag(TagType.TITLE));
 
 	string state;
-	switch (status.get_state()) {
+	switch (status.state) {
 		case State.STOP:
 			state = "stopped"; break;
 		case State.PLAY:
@@ -20,10 +20,10 @@ int main()
 			state = "unknown"; break;
 	}
 
-	uint progress = (status.get_elapsed_time() * 100 / status.get_total_time());
-	stdout.printf("[%s] #%u/%u   %u/%u (%u%%)\n", state, song.get_pos(), status.get_queue_length(), status.get_elapsed_time(), status.get_total_time(), progress);
+	uint progress = (status.elapsed_time * 100 / status.total_time);
+	stdout.printf("[%s] #%u/%u   %u/%u (%u%%)\n", state, song.pos, status.queue_length, status.elapsed_time, status.total_time, progress);
 
-	stdout.printf("volume:%d%%  repeat: %s  random: %s  single: %s  consume: %s\n", status.get_volume(), status.get_repeat().to_string(), status.get_random().to_string(), status.get_single().to_string(), status.get_consume().to_string());
+	stdout.printf("volume:%d%%  repeat: %s  random: %s  single: %s  consume: %s\n", status.volume, status.repeat.to_string(), status.random.to_string(), status.single.to_string(), status.consume.to_string());
 
 	return 0;
 }
