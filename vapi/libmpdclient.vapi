@@ -58,7 +58,10 @@ namespace Mpd {
 		MIXER = 0x10,
 		OUTPUT = 0x20,
 		OPTIONS = 0x40,
-		UPDATE = 0x80
+		UPDATE = 0x80,
+		STICKER = 0x100,
+		SUBSCRIPTION = 0x200,
+		MESSAGE = 0x400
 	}
 
 	[CCode (cname = "enum mpd_parser_result")]
@@ -109,7 +112,7 @@ namespace Mpd {
 	[Compact]
 	public class Async {
 		public Mpd.Error error { get; }
-		public string error_message { get; }
+		public string? error_message { get; }
 		public int system_error { get; }
 		public int fd { get; }
 
@@ -143,7 +146,9 @@ namespace Mpd {
 		public Mpd.ServerError server_error { get; }
 		public int system_error { get; }
 		public uint[] server_version { get; }
+		public uint server_error_location { get; }
 		public uint timeout { set; }
+		public Settings settings { get; }
 
 		public Connection(string? host = null, uint port = 0, uint timeout_ms = 0);
 		[CCode (cname = "mpd_connection_new_async")]
@@ -154,10 +159,12 @@ namespace Mpd {
 		public Mpd.Error get_error();
 		public unowned string get_error_message();
 		public Mpd.ServerError get_server_error();
+		public uint get_server_error_location();
 		public int get_system_error();
 		public bool clear_error();
 		public uint[] get_server_version();
 		public int cmp_server_version(uint major, uint minor, uint patch);
+		public Settings get_settings();
 		[CCode (cname = "mpd_recv_directory")]
 		public Directory? recv_directory();
 		[CCode (cname = "mpd_recv_entity")]
@@ -482,6 +489,32 @@ namespace Mpd {
 		public bool send_mixrampdelay(float seconds);
 		[CCode (cname = "mpd_run_mixrampdelay")]
 		public bool run_mixrampdelay(float seconds);
+		[CCode (cname = "mpd_send_clearerror")]
+		public bool send_clearerror();
+		[CCode (cname = "mpd_run_clearerror")]
+		public bool run_clearerror();
+		[CCode (cname = "mpd_send_list_playlists")]
+		public bool send_list_playlists();
+		[CCode (cname = "mpd_send_subscribe")]
+		public bool send_subscribe(string channel);
+		[CCode (cname = "mpd_run_subscribe")]
+		public bool run_subscribe(string channel);
+		[CCode (cname = "mpd_send_unsubscribe")]
+		public bool send_unsubscribe(string channel);
+		[CCode (cname = "mpd_run_unsubscribe")]
+		public bool run_unsubscribe(string channel);
+		[CCode (cname = "mpd_send_send_message")]
+		public bool send_send_message(string channel, string text);
+		[CCode (cname = "mpd_run_send_message")]
+		public bool run_send_message(string channel, string text);
+		[CCode (cname = "mpd_send_read_messages")]
+		public bool send_read_messages();
+		[CCode (cname = "mpd_recv_message")]
+		public Message recv_message();
+		[CCode (cname = "mpd_send_channels")]
+		public bool send_channels();
+		[CCode (cname = "mpd_recv_channel_pair")]
+		public Pair recv_channel_pair();
 	}
 
 	[CCode (cname = "struct mpd_directory",
@@ -655,6 +688,32 @@ namespace Mpd {
 		public AudioFormat get_audio_format();
 		public uint get_update_id();
 		public unowned string get_error();
+	}
+
+	[CCode (cname = "struct mpd_settings")]
+	[Compact]
+	public class Settings {
+		public string? host { get; }
+		public uint port { get; }
+		public uint timeout_ms { get; }
+		public string? password { get; }
+
+		public Settings(string? host = null, uint port = 0, uint timeout_ms = 0, string? reserved = null, string? password = null);
+		public string? get_host();
+		public uint get_port();
+		public uint get_timeout_ms();
+		public string? get_password();
+	}
+
+	[CCode (cname = "struct mpd_message")]
+	[Compact]
+	public class Message {
+		public string channel { get; }
+		public string text { get; }
+
+		public bool feed(Pair pair);
+		public unowned string get_channel();
+		public unowned string get_text();
 	}
 
 	public Status status_begin();
