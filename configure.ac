@@ -7,6 +7,9 @@ AC_PROG_CC
 AC_PATH_PROG(VALAC, valac, valac)
 AC_SUBST(VALAC)
 
+vapidir="${datadir}/vala/vapi"
+AC_SUBST(vapidir)
+
 PKG_PROG_PKG_CONFIG([0.25])
 PKG_CHECK_MODULES([libmpdclient], [libmpdclient >= 2.4])
 PKG_CHECK_MODULES([glib], [glib-2.0])

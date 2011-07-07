@@ -7,6 +7,8 @@ AM_CPPFLAGS = $(libmpdclient_CFLAGS) \
 VALAFLAGS = --pkg libmpdclient \
 	    --vapidir $(top_srcdir)/vapi
 
+vapi_DATA = vapi/libmpdclient.vapi
+
 mpc_vala_SOURCES = src/main.vala
 
 mpc_vala_LDADD = $(libmpdclient_LIBS) \
