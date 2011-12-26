@@ -108,7 +108,9 @@ namespace Mpd {
 		PAUSE = 3
 	}
 
-	[CCode (cname = "struct mpd_async")]
+	[CCode (cname = "struct mpd_async",
+		free_function = "mpd_async_free")]
+	[Compact]
 	[Compact]
 	public class Async {
 		public Mpd.Error error { get; }
@@ -136,7 +138,8 @@ namespace Mpd {
 		public uint32 sample_rate;
 	}
 
-	[CCode (cname = "struct mpd_connection")]
+	[CCode (cname = "struct mpd_connection",
+		free_function="mpd_connection_free")
 	[Compact]
 	public class Connection {
 		public int fd { get; }
@@ -518,7 +521,8 @@ namespace Mpd {
 	}
 
 	[CCode (cname = "struct mpd_directory",
-		copy_function = "mpd_directory_dup")]
+		copy_function = "mpd_directory_dup",
+		free_function = "mpd_directory_free")]
 	[Compact]
 	public class Directory {
 		public string path { get; }
@@ -528,7 +532,8 @@ namespace Mpd {
 		public Entity? entity_begin();
 	}
 
-	[CCode (cname = "struct mpd_entity")]
+	[CCode (cname = "struct mpd_entity",
+		free_function = "mpd_entity_free")]
 	[Compact]
 	public class Entity {
 		public EntityType type { get; }
@@ -543,7 +548,8 @@ namespace Mpd {
 		public bool feed(Pair pair);
 	}
 
-	[CCode (cname = "struct mpd_output")]
+	[CCode (cname = "struct mpd_output"
+		free_function = "mpd_output_free")]
 	[Compact]
 	public class Output {
 		public uint id { get; }
@@ -573,7 +579,8 @@ namespace Mpd {
 		public Idle idle_parse_pair();
 	}
 
-	[CCode (cname = "struct mpd_parser")]
+	[CCode (cname = "struct mpd_parser",
+		free_function = "mpd_parser_free")]
 	[Compact]
 	public class Parser {
 		public ServerError server_error { get; }
@@ -592,7 +599,8 @@ namespace Mpd {
 	}
 
 	[CCode (cname = "struct mpd_playlist",
-		copy_function = "mpd_playlist_dup")]
+		copy_function = "mpd_playlist_dup",
+		free_function = "mpd_playlist_free")]
 	[Compact]
 	public class Playlist {
 		public string path { get; }
@@ -604,7 +612,8 @@ namespace Mpd {
 	}
 
 	[CCode (cname = "struct mpd_song",
-		copy_function = "mpd_song_dup")]
+		copy_function = "mpd_song_dup",
+		free_function = "mpd_song_free")]
 	[Compact]
 	public class Song {
 		public string uri { get; }
@@ -623,7 +632,8 @@ namespace Mpd {
 		public bool feed(Pair pair);
 	}
 
-	[CCode (cname = "struct mpd_stats")]
+	[CCode (cname = "struct mpd_stats",
+		free_function = "mpd_stats_free")]
 	[Compact]
 	public class Stats {
 		public uint number_of_artist { get; }
@@ -644,7 +654,8 @@ namespace Mpd {
 		public ulong get_db_play_time();
 	}
 
-	[CCode (cname = "struct mpd_status")]
+	[CCode (cname = "struct mpd_status",
+		free_function = "mpd_status_free")]
 	[Compact]
 	public class Status {
 		public int volume { get; }
@@ -690,7 +701,8 @@ namespace Mpd {
 		public unowned string get_error();
 	}
 
-	[CCode (cname = "struct mpd_settings")]
+	[CCode (cname = "struct mpd_settings",
+		free_function = "mpd_settings_free")]
 	[Compact]
 	public class Settings {
 		public string? host { get; }
@@ -705,7 +717,8 @@ namespace Mpd {
 		public string? get_password();
 	}
 
-	[CCode (cname = "struct mpd_message")]
+	[CCode (cname = "struct mpd_message",
+		free_function = "mpd_message_free")]
 	[Compact]
 	public class Message {
 		public string channel { get; }
