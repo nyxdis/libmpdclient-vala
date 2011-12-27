@@ -562,7 +562,8 @@ namespace Mpd {
 		public bool get_enabled();
 	}
 
-	[CCode (cname = "struct mpd_pair")]
+	[CCode (cname = "struct mpd_pair",
+		free_function = "")]
 	[Compact]
 	public class Pair {
 		public const string name;
