@@ -548,7 +548,7 @@ namespace Mpd {
 		public bool feed(Pair pair);
 	}
 
-	[CCode (cname = "struct mpd_output"
+	[CCode (cname = "struct mpd_output",
 		free_function = "mpd_output_free")]
 	[Compact]
 	public class Output {
