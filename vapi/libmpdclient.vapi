@@ -566,8 +566,8 @@ namespace Mpd {
 		free_function = "")]
 	[Compact]
 	public class Pair {
-		public string name;
-		public string value;
+		public unowned string name;
+		public unowned string value;
 		[CCode (cname = "mpd_directory_begin")]
 		public Directory? directory_begin();
 		[CCode (cname = "mpd_output_begin")]
