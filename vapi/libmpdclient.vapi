@@ -139,7 +139,7 @@ namespace Mpd {
 	}
 
 	[CCode (cname = "struct mpd_connection",
-		free_function="mpd_connection_free")
+		free_function="mpd_connection_free")]
 	[Compact]
 	public class Connection {
 		public int fd { get; }
