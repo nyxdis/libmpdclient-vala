@@ -139,7 +139,7 @@ namespace Mpd {
 	}
 
 	[CCode (cname = "struct mpd_connection",
-		free_function="mpd_connection_free")
+		free_function="mpd_connection_free")]
 	[Compact]
 	public class Connection {
 		public int fd { get; }
@@ -548,7 +548,7 @@ namespace Mpd {
 		public bool feed(Pair pair);
 	}
 
-	[CCode (cname = "struct mpd_output"
+	[CCode (cname = "struct mpd_output",
 		free_function = "mpd_output_free")]
 	[Compact]
 	public class Output {
@@ -562,11 +562,12 @@ namespace Mpd {
 		public bool get_enabled();
 	}
 
-	[CCode (cname = "struct mpd_pair")]
+	[CCode (cname = "struct mpd_pair",
+		free_function = "")]
 	[Compact]
 	public class Pair {
-		public const string name;
-		public const string value;
+		public unowned string name;
+		public unowned string value;
 		[CCode (cname = "mpd_directory_begin")]
 		public Directory? directory_begin();
 		[CCode (cname = "mpd_output_begin")]
