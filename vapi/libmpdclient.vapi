@@ -420,6 +420,18 @@ namespace Mpd {
 		public bool send_swap_id(uint id1, uint id2);
 		[CCode (cname = "mpd_run_swap_id")]
 		public bool run_swap_id(uint id1, uint id2);
+		[CCode (cname = "mpd_send_prio")]
+		public bool send_prio(int priority, uint position);
+		[CCode (cname = "mpd_run_prio")]
+		public bool run_prio(int priority, uint position);
+		[CCode (cname = "mpd_send_prio_range")]
+		public bool send_prio_range(int priority, uint start, uint end);
+		[CCode (cname = "mpd_run_prio_range")]
+		public bool run_prio_range(int priority, uint start, uint end);
+		[CCode (cname = "mpd_send_prio_id")]
+		public bool send_prio_id(int priority, uint id);
+		[CCode (cname = "mpd_run_prio_id")]
+		public bool run_prio_id(int priority, uint id);
 		[CCode (cname = "mpd_send_current_song")]
 		public bool send_current_song();
 		[CCode (cname = "mpd_run_current_song")]
@@ -693,6 +705,8 @@ namespace Mpd {
 		public float get_mixrampdelay();
 		public int get_song_pos();
 		public int get_song_id();
+		public int get_next_song_pos();
+		public int get_next_song_id();
 		public uint get_elapsed_time();
 		public uint get_elapsed_ms();
 		public uint get_total_time();
