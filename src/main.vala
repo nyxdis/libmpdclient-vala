@@ -25,9 +25,22 @@ int main()
 
 	stdout.printf("volume:%d%%  repeat: %s  random: %s  single: %s  consume: %s\n", status.volume, status.repeat.to_string(), status.random.to_string(), status.single.to_string(), status.consume.to_string());
 
-    var albumart = new uint8[32768];
-    var len = cnc.run_albumart(song.uri, 0, albumart);
+	uint8[] albumart = {};
+	var len = 0;
 
-	stdout.printf("albumart is at least: %d bytes\n", len);
+	while (true) {
+		uint8 chunk[8192];
+		var ret = cnc.run_albumart(song.uri, len, chunk);
+		len += ret;
+
+		if (ret <= 0)
+			break;
+
+		foreach (var c in chunk) {
+			albumart += c;
+		}
+	}
+
+	stdout.printf("albumart has %d bytes\n", albumart.length);
 	return 0;
 }
