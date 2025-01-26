@@ -25,5 +25,9 @@ int main()
 
 	stdout.printf("volume:%d%%  repeat: %s  random: %s  single: %s  consume: %s\n", status.volume, status.repeat.to_string(), status.random.to_string(), status.single.to_string(), status.consume.to_string());
 
+    var albumart = new uint8[32768];
+    var len = cnc.run_albumart(song.uri, 0, albumart);
+
+	stdout.printf("albumart is at least: %d bytes\n", len);
 	return 0;
 }
