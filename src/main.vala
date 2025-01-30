@@ -26,15 +26,18 @@ int main()
 	stdout.printf("volume:%d%%  repeat: %s  random: %s  single: %s  consume: %s\n", status.volume, status.repeat.to_string(), status.random.to_string(), status.single.to_string(), status.consume.to_string());
 
 	uint8[] albumart = {};
-	var len = 0;
+	var offset = 0;
 
 	while (true) {
 		uint8 chunk[8192];
-		var ret = cnc.run_albumart(song.uri, len, chunk);
-		len += ret;
+		var ret = cnc.run_albumart(song.uri, offset, chunk);
 
-		if (ret <= 0)
+		if (ret <= 0) {
+			cnc.clear_error ();
 			break;
+		}
+
+		offset += ret;
 
 		foreach (var c in chunk) {
 			albumart += c;
