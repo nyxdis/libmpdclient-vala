@@ -2,7 +2,14 @@ using Mpd;
 
 int main()
 {
-	var cnc = new Connection();
+	var host = GLib.Environment.get_variable ("MPD_HOST");
+
+	var cnc = new Connection(host);
+
+	if (cnc.error != Mpd.Error.SUCCESS) {
+		error (cnc.error_message);
+	}
+
 	var song = cnc.run_current_song();
 	var status = cnc.run_status();
 
@@ -23,7 +30,7 @@ int main()
 	uint progress = (status.elapsed_time * 100 / status.total_time);
 	stdout.printf("[%s] #%u/%u   %u/%u (%u%%)\n", state, song.pos, status.queue_length, status.elapsed_time, status.total_time, progress);
 
-	stdout.printf("volume:%d%%  repeat: %s  random: %s  single: %s  consume: %s\n", status.volume, status.repeat.to_string(), status.random.to_string(), status.single.to_string(), status.consume.to_string());
+	stdout.printf("volume: %d%%  repeat: %s  random: %s  single: %s  consume: %s\n", status.volume, status.repeat.to_string(), status.random.to_string(), status.single.to_string(), status.consume.to_string());
 
 	uint8[] albumart = {};
 	var offset = 0;
@@ -44,6 +51,6 @@ int main()
 		}
 	}
 
-	stdout.printf("albumart has %d bytes\n", albumart.length);
+	stdout.printf("albumart: %d bytes\n", albumart.length);
 	return 0;
 }
