@@ -97,6 +97,7 @@ namespace Mpd {
 		MUSICBRAINZ_ALBUMID,
 		MUSICBRAINZ_ALBUMARTISTID,
 		MUSICBRAINZ_TRACKID,
+		MUSICBRAINZ_RELEASETRACKID,
 		COUNT
 	}
 
@@ -110,7 +111,6 @@ namespace Mpd {
 
 	[CCode (cname = "struct mpd_async",
 		free_function = "mpd_async_free")]
-	[Compact]
 	[Compact]
 	public class Async {
 		public Mpd.Error error { get; }
@@ -530,6 +530,12 @@ namespace Mpd {
 		public bool send_channels();
 		[CCode (cname = "mpd_recv_channel_pair")]
 		public Pair recv_channel_pair();
+		[CCode (cname = "mpd_send_albumart")]
+		public bool send_albumart(string uri, uint offset);
+		[CCode (cname = "mpd_recv_albumart")]
+		public int recv_albumart(uint8[] buf);
+		[CCode (cname = "mpd_run_albumart")]
+		public int run_albumart(string uri, uint offset, uint8[] buf);
 	}
 
 	[CCode (cname = "struct mpd_directory",
