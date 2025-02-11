@@ -46,8 +46,8 @@ int main()
 
 		offset += ret;
 
-		foreach (var c in chunk) {
-			albumart += c;
+		for (var i = 0; i < ret; i++) {
+			albumart += chunk[i];
 		}
 	}
 
