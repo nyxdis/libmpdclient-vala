@@ -93,11 +93,35 @@ namespace Mpd {
 		PERFORMER,
 		COMMENT,
 		DISC,
+
 		MUSICBRAINZ_ARTISTID,
 		MUSICBRAINZ_ALBUMID,
 		MUSICBRAINZ_ALBUMARTISTID,
 		MUSICBRAINZ_TRACKID,
 		MUSICBRAINZ_RELEASETRACKID,
+
+		ORIGINAL_DATE,
+
+		ARTIST_SORT,
+		ALBUM_ARTIST_SORT,
+
+		ALBUM_SORT,
+		LABEL,
+		MUSICBRAINZ_WORKID,
+
+		GROUPING,
+		WORK,
+		CONDUCTOR,
+
+		COMPOSER_SORT,
+		ENSEMBLE,
+		MOVEMENT,
+		MOVEMENTNUMBER,
+		LOCATION,
+		MOOD,
+		TITLE_SORT,
+		MUSICBRAINZ_RELEASEGROUPID,
+
 		COUNT
 	}
 
@@ -468,6 +492,10 @@ namespace Mpd {
 		public bool send_previous();
 		[CCode (cname = "mpd_run_previous")]
 		public bool run_previous();
+		[CCode (cname = "mpd_send_seek_current")]
+		public bool send_seek_current(float t, bool relative);
+		[CCode (cname = "mpd_run_seek_current")]
+		public bool run_seek_current(float t, bool relative);
 		[CCode (cname = "mpd_send_seek_pos")]
 		public bool send_seek_pos(uint song_pos, uint t);
 		[CCode (cname = "mpd_run_seek_pos")]
