@@ -236,6 +236,8 @@ namespace Mpd {
 		public bool run_playlist_add(string name, string path);
 		[CCode (cname = "mpd_send_playlist_move")]
 		public bool send_playlist_move(string name, uint from, uint to);
+		[CCode (cname = "mpd_run_playlist_move")]
+		public bool run_playlist_move(string name, uint from, uint to);
 		[CCode (cname = "mpd_send_playlist_delete")]
 		public bool send_playlist_delete(string name, uint pos);
 		[CCode (cname = "mpd_run_playlist_delete")]
